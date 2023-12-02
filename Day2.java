@@ -8,8 +8,6 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 
 import java.util.Scanner;
 import java.util.Map;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,21 +19,30 @@ public class Day2 {
         bag.put("blue", 14);
     }
 
-    public static boolean isPossible(int gameNo, ArrayList<HashMap<String, Integer>> gameDetails) {
+    public static HashMap<String, Integer> maxCubes(ArrayList<HashMap<String, Integer>> gameDetails) {
+        HashMap<String, Integer> mx = new HashMap<>();
         for (HashMap<String, Integer> b : gameDetails) {
             for (Map.Entry<String, Integer> c : b.entrySet()) {
-                if (c.getValue().compareTo(bag.get(c.getKey())) <= 0)
-                    continue;
-                else
-                    return false;
+                if (c.getValue().compareTo(mx.getOrDefault(c.getKey(), 0)) > 0) {
+                    mx.put(c.getKey(), c.getValue());
+                }
             }
         }
-        return true;
+        return mx;
+    }
+
+    public static int power(HashMap<String, Integer> mx) {
+        int mul = 1;
+        for (Map.Entry<String, Integer> m : mx.entrySet()) {
+            if (m.getValue() != 0)
+                mul *= m.getValue();
+        }
+        return mul;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int sumOfIds = 0;
+        int sumOfPower = 0;
         while (sc.hasNextLine()) {
             String game = sc.nextLine();
             String[] gameSplit = game.split(": ");
@@ -51,10 +58,10 @@ public class Day2 {
                 gameDetails.add(hm);
             }
             int gameId = Integer.parseInt(gameNo);
-            if (isPossible(gameId, gameDetails)) {
-                sumOfIds += gameId;
-            }
+            System.out.println((maxCubes(gameDetails)));
+            sumOfPower += power(maxCubes(gameDetails));
+
         }
-        System.out.println(sumOfIds);
+        System.out.println(sumOfPower);
     }
 }
