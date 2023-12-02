@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Day1 {
+public class Day1Part2 {
 
     public static int firstDigit(String s) {
         int i = 0;
