@@ -25,9 +25,7 @@ public class Day6Part1 {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        // Scanner sc = new Scanner(new
-        // FileInputStream("day6-part1-example-input.txt"));
-        Scanner sc = new Scanner(new FileInputStream("day6-input.txt"));
+        Scanner sc = new Scanner(System.in);
 
         String[] time = sc.nextLine().split("\s+");
         String[] distance = sc.nextLine().split("\s+");
@@ -36,6 +34,7 @@ public class Day6Part1 {
             int t = Integer.parseInt(time[i]);
             int d = Integer.parseInt(distance[i]);
             int now = noOfWays(t, d);
+            System.out.println(now);
             res *= now;
         }
         System.out.println(res);
